@@ -21,24 +21,32 @@ struct ContentView: View {
             }
             
             HStack{
-                Button(action: {
-                    emojicount -= 1
-                }, label: {
-                    Text("Remove Card")
-                })
-                
+                remove
                 Spacer()
-                
-                Button(action: {
-                    emojicount += 1
-                }, label: {
-                    Text("Add Card")
-                })
-                
+                add
             }
+            .font(Font.largeTitle)
         }
         .padding()
         .foregroundStyle(.blue)
+    }
+    var remove : some View{
+        Button(action: {
+            if emojicount > 1{
+                emojicount -= 1
+            }
+        }, label: {
+            Image(systemName: "minus.circle")
+        })
+    }
+    var add : some View{
+        Button(action: {
+            if emojicount < emojis.count{
+                emojicount += 1
+            }
+        }, label: {
+            Image(systemName: "plus.circle")
+        })
     }
 }
 
