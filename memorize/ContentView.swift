@@ -14,22 +14,35 @@ struct ContentView: View {
     
     var body: some View {
         VStack{
-            HStack{
-                ForEach(emojis[0..<emojicount] , id: \.self) { emoji in
-                    CardView(content : emoji)
-                }
-            }
-            
-            HStack{
-                remove
-                Spacer()
-                add
-            }
+            cardList
+            Spacer()
+            actionButtons
             .font(Font.largeTitle)
         }
         .padding()
         .foregroundStyle(.blue)
     }
+    
+    var cardList: some View{
+        ScrollView{
+            LazyVGrid(columns: [GridItem(.adaptive(minimum:85), spacing: 0)], spacing: 0){
+                ForEach(emojis[0..<emojicount], id: \.self) { emojis in
+                        CardView(content: emojis)
+                        .aspectRatio(2/3 , contentMode: .fit)
+                        .padding(4)
+                }
+            }
+        }
+    }
+    
+    var actionButtons: some View{
+        HStack{
+            remove
+            Spacer()
+            add
+        }
+    }
+    
     var remove : some View{
         Button(action: {
             if emojicount > 1{
@@ -56,14 +69,18 @@ struct CardView : View{
     var body: some View {
         ZStack {
             let shape = RoundedRectangle(cornerRadius: 20)
-            if isFaceUp{
-                shape.strokeBorder(lineWidth: 3)
+            Group{
                 shape.fill(.white)
-                Text(content).font(.largeTitle)
+                shape.strokeBorder(lineWidth: 3)
+                Text(content)
+                    .font(Font.system(size: 300))
+                    .minimumScaleFactor(0.01)
+                    .aspectRatio(1 , contentMode: .fit)
             }
-            else{
-                RoundedRectangle(cornerRadius: 20)
-            }
+            .opacity(isFaceUp ? 1 : 0)
+            
+            shape.opacity(isFaceUp ? 0 : 1)
+            
         }
         .onTapGesture(perform: {
             isFaceUp = !isFaceUp
