@@ -13,9 +13,9 @@ class EmojiMemoryGame {
     private static var emojis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J" , "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T"]
     
     private static func createMemoryGame() -> MemoryGame<String>{
-        MemoryGame<String>(numberOfPairsOfCards: 4 ,
-                           createCardContent:{ index in EmojiMemoryGame.emojis[index] })
-    }
+            MemoryGame<String>(numberOfPairsOfCards: 4 ,
+                               createCardContent:{ index in EmojiMemoryGame.emojis[index] })
+        }
     
     private var model:MemoryGame<String> = createMemoryGame()
     
@@ -30,4 +30,11 @@ class EmojiMemoryGame {
     func shuffle(){
         model.shuffle()
     }
+    var score: Int {
+        model.score
+    }
+    func newGame() {
+        model = EmojiMemoryGame.createMemoryGame()
+    }
+    
 }

@@ -7,16 +7,26 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
+    
     var viewModel : EmojiMemoryGame
     
     var body: some View {
         VStack{
+            Text("Score: \(viewModel.score)")
+                .font(.largeTitle)
+                .foregroundColor(.red)
             cardList
                 .animation(.default, value: viewModel.cards)
             Spacer()
-            Button("Shuffle") {
-                viewModel.shuffle()
+            Button(action: {
+                viewModel.newGame()
+            }) {
+                VStack {
+                    Text("Shuffle")
+                        .font(.largeTitle)
+                }
             }
             .font(.largeTitle)
         }
